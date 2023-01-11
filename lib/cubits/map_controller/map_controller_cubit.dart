@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 import 'package:waypoint/models/waypoint.dart';
@@ -16,6 +17,7 @@ class MapControllerCubit extends Cubit<MapControllerState> {
 
   final Set<Marker> markers = {};
   final List<WayPoint> wayPoints = [];
+  final List<TextEditingController> controllers = [];
   String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
       length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
@@ -24,7 +26,7 @@ class MapControllerCubit extends Cubit<MapControllerState> {
   void addmarker(LatLng pos) {
     wayPoints.add(WayPoint(
         latitude: pos.latitude, longitude: pos.longitude, order: markerCount));
-
+    controllers.add(TextEditingController());
     markers.add(Marker(markerId: MarkerId(getRandomString(5)), position: pos));
     markerCount++;
     emit(MapControllerInitial(markers: markers));
@@ -34,6 +36,7 @@ class MapControllerCubit extends Cubit<MapControllerState> {
     markers.clear();
     wayPoints.clear();
     markerCount = 0;
+    controllers.clear();
     emit(MapControllerInitial(markers: markers));
   }
 }

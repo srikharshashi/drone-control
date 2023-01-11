@@ -5,7 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../models/waypoint.dart';
+import '../../models/waypoint.dart';
 
 part 'file_export_state.dart';
 

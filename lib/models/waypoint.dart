@@ -1,8 +1,9 @@
 class WayPoint {
   double latitude;
   double longitude;
-  int order;                                                                      
-  
+  int order;
+  String? name;
+
   WayPoint(
       {required this.latitude, required this.longitude, required this.order});
 
@@ -10,7 +11,8 @@ class WayPoint {
     return {
       "latitude": wayPoint.latitude,
       "longitude": wayPoint.longitude,
-      "index": wayPoint.order
+      "index": wayPoint.order,
+      "name": wayPoint.name ?? ""
     };
   }
 }

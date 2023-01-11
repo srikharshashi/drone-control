@@ -49,7 +49,7 @@ android {
     }
 
     defaultConfig {
-        manifestPlaceholders = [
+        manifestPlaceholders += [
        googleMapsApiKey       : googleMapsApiKey
     ]   
 
