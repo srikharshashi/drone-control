@@ -15,7 +15,7 @@ class TrackLocationCubit extends Cubit<TrackLocationState> {
     print("abcd");
     final channel = WebSocketChannel.connect(
       Uri.parse(
-          'wss://mission-store.up.railway.app/socket/command?device=tracker'),
+          'ws://18.234.187.114:4000/socket/command?device=tracker'),
     );
     var stream = channel.stream;
 

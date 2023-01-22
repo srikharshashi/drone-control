@@ -10,13 +10,12 @@ part 'drone_command_state.dart';
 class DroneCommandCubit extends Cubit<DroneCommandState> {
   DroneCommandCubit() : super(DroneCommandInitial());
 
-  final SERVER_URL =
-      Uri.parse("https://mission-store.up.railway.app/mission/query/all");
+  final SERVER_URL = Uri.parse("http://18.234.187.114:4000/mission/query/all");
   List<dynamic> responseJson = [];
   Map<String, int> map = {};
+  Map<String, String> map2 = {};
 
-  var WSS_URL =
-      "wss://mission-store.up.railway.app/socket/command?device=phone";
+  var WSS_URL = "ws://18.234.187.114:4000/socket/command?device=phone";
 
   void fetchMissions() async {
     emit(FetchMissionLoad());
@@ -35,6 +34,7 @@ class DroneCommandCubit extends Cubit<DroneCommandState> {
         responseJson.forEach((element) {
           missions.add(element["name"]);
           map[element["name"]] = c;
+          map2[element["name"]] = element["_id"];
           c++;
         });
         emit(MissionSelect(missions: missions));
@@ -50,8 +50,6 @@ class DroneCommandCubit extends Cubit<DroneCommandState> {
   void reset() {
     fetchMissions();
   }
-
-  
 
   void startMission(String name) {
     print(name);
@@ -70,13 +68,11 @@ class DroneCommandCubit extends Cubit<DroneCommandState> {
         print("reply is " + data.toString());
         if (data["reply"] == true && flag) {
           flag = false;
-          channel.sink
-              .add(jsonEncode({"message": "LAUNCH", "waypoints": mission}));
+          channel.sink.add(jsonEncode(
+              {"message": "LAUNCH", "waypoints": mission, "id": map2[name]}));
           emit(DroneCommandSucess());
         }
       }
     });
   }
-
-
 }
